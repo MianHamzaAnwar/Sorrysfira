@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Musfira Ayesha</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Added Lora font for paragraphs -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Lora:ital,wght@0,400;0,500;1,400&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Maroon & Gold Theme */
+            --bg: #0a0303; /* Deep Dark Maroon/Black */
+            --bg-soft: #150808;
+            --fg: #f5e6e8; /* Soft Rose White */
+            --fg-light: #d4b5b8;
+            --accent: #800000; /* Classic Maroon */
+            --accent-deep: #a93226; /* Brighter Maroon for contrast */
+            --muted: #6d3f5a;
+            --rose: #c0392b; /* Deeper Rose */
+            --rose-deep: #922b21;
+            --card: rgba(20, 5, 5, 0.7);
+            --border: rgba(128, 0, 0, 0.3);
+            --glass: rgba(128, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Lora', serif; /* Changed Font Family */
+            background: var(--bg);
+            color: var(--fg);
+            overflow-x: hidden;
+            line-height: 1.8;
+            position: relative;
+            perspective: 1000px;
+        }
+        
+        h1, h2, h3, .heading {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        /* 3D Animation Background Shapes */
+        .shapes-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.15;
+            filter: blur(1px);
+        }
+
+        .shape.ring {
+            width: 300px;
+            height: 300px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            animation: spin3d 20s infinite linear;
+        }
+
+        .shape.sphere {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, var(--accent-deep), transparent);
+            box-shadow: 0 0 60px rgba(169, 50, 38, 0.2);
+            animation: float3d 15s infinite ease-in-out;
+        }
+
+        .shape.cube {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, rgba(128, 0, 0, 0.2), transparent);
+            border: 1px solid var(--accent);
+            transform: rotate(45deg);
+            animation: rotateCube 12s infinite ease-in-out;
+        }
+
+        @keyframes float3d {
+            0%, 100% { transform: translateY(0) translateZ(0) rotate(0deg); }
+            50% { transform: translateY(-100px) translateZ(50px) rotate(180deg); }
+        }
+
+        @keyframes spin3d {
+            0% { transform: rotateX(0deg) rotateY(0deg); }
+            100% { transform: rotateX(360deg) rotateY(360deg); }
+        }
+
+        @keyframes rotateCube {
+            0%, 100% { transform: rotate(45deg) translateZ(0); }
+            50% { transform: rotate(225deg) translateZ(100px); }
+        }
+
+        /* Rose Petals */
+        .petal {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0;
+            animation: petalFall linear forwards;
+        }
+
+        @keyframes petalFall {
+            0% { opacity: 0; transform: translateY(-10vh) rotate(0deg) scale(0.8); }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.6; }
+            100% { opacity: 0; transform: translateY(110vh) rotate(720deg) scale(0.4) translateX(100px); }
+        }
+
+        /* Floating Particles */
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, var(--accent-deep) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatParticle 15s ease-in-out infinite;
+        }
+
+        @keyframes floatParticle {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
+            50% { transform: translateY(-30px) translateX(20px); opacity: 0.6; }
+        }
+
+        /* Section Animations */
+        .reveal-section {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal-section.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 2rem;
+            background: radial-gradient(ellipse at center, rgba(40, 10, 10, 0.8) 0%, var(--bg) 70%);
+            overflow: hidden;
+        }
+
+        /* Full Background Name - CHANGED TO WHITE */
+        .hero-bg-name {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(80px, 18vw, 250px);
+            font-weight: 300;
+            font-style: italic;
+            color: transparent;
+            /* White stroke with transparency */
+            -webkit-text-stroke: 2px rgba(255, 255, 255, 0.15); 
+            white-space: nowrap;
+            z-index: 0;
+            user-select: none;
+            animation: textPulse 6s ease-in-out infinite;
+        }
+
+        @keyframes textPulse {
+            0%, 100% { opacity: 0.5; letter-spacing: 0vw; }
+            50% { opacity: 0.9; letter-spacing: 0.5vw; }
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 300;
+            color: var(--fg);
+            text-align: center;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1.5s ease-out 0.5s both;
+            z-index: 10;
+            position: relative;
+        }
+
+        .hero-subtitle {
+            font-family: 'Lora', serif;
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            font-weight: 400;
+            font-style: italic;
+            color: var(--fg-light);
+            animation: fadeInUp 1.5s ease-out 0.8s both;
+            z-index: 10;
+            position: relative;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            animation: bounce 2s ease-in-out infinite;
+            z-index: 10;
+            color: var(--accent-deep);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Main Letter Section - 3D Animated */
+        .letter-section {
+            position: relative;
+            z-index: 10;
+            padding: 4rem 1.5rem;
+            background: linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 100%);
+            perspective: 1000px;
+        }
+
+        .letter-container {
+            max-width: 750px;
+            margin: 0 auto;
+            background: var(--card);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 3rem 3.5rem;
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.5),
+                0 0 30px rgba(128, 0, 0, 0.1);
+            
+            /* 3D Animation Properties */
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease-out;
+            animation: cardFloat 6s ease-in-out infinite;
+        }
+
+        /* Floating Animation for Letter */
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0) rotateX(0deg) rotateY(0deg); }
+            50% { transform: translateY(-15px) rotateX(2deg) rotateY(2deg); }
+        }
+
+        .letter-container:hover {
+            animation-play-state: paused;
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.6),
+                0 0 50px rgba(169, 50, 38, 0.2);
+        }
+
+        .letter-greeting {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 500;
+            color: var(--accent-deep);
+            margin-bottom: 2rem;
+            text-shadow: 0 0 10px rgba(169, 50, 38, 0.3);
+        }
+
+        .letter-content {
+            font-size: 1.1rem; /* Slightly larger for Lora */
+            line-height: 2; /* More spacing for readability */
+            color: var(--fg-light);
+            font-style: normal;
+        }
+
+        .letter-content p {
+            margin-bottom: 1.8rem;
+            text-align: justify;
+        }
+
+        .letter-content .signature {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.5rem;
+            color: var(--fg);
+            text-align: right;
+            margin-top: 2.5rem;
+        }
+
+        /* Polaroid Gallery - 3D Enhanced */
+        .gallery-section {
+            position: relative;
+            z-index: 10;
+            padding: 6rem 1.5rem;
+            background: var(--bg-soft);
+            perspective: 1000px;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--fg);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--fg-light);
+            font-weight: 300;
+            font-style: italic;
+            margin-bottom: 4rem;
+        }
+
+        .polaroid-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .polaroid {
+            background: #0a0303;
+            padding: 1rem 1rem 3rem 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            cursor: pointer;
+            position: relative;
+            border: 1px solid var(--border);
+            
+            /* 3D Animation */
+            transform-style: preserve-3d;
+            animation: photoFloat 8s ease-in-out infinite;
+        }
+
+        /* Individual Floating Delays */
+        .polaroid:nth-child(odd) { 
+            transform: rotate(-2deg); 
+            animation-delay: 1s;
+        }
+        .polaroid:nth-child(even) { 
+            transform: rotate(2deg); 
+            animation-delay: 2s;
+        }
+
+        @keyframes photoFloat {
+            0%, 100% { transform: translateY(0) rotateZ(-2deg) translateZ(0); }
+            50% { transform: translateY(-10px) rotateZ(-1deg) translateZ(20px); }
+        }
+
+        .polaroid:hover {
+            transform: rotate(0deg) scale(1.1) translateZ(60px) !important;
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.6),
+                0 0 40px rgba(128, 0, 0, 0.3);
+            z-index: 20;
+            border-color: var(--accent-deep);
+            animation-play-state: paused;
+        }
+
+        .polaroid-image {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            filter: sepia(20%) contrast(110%);
+            transition: filter 0.5s ease;
+        }
+
+        .polaroid:hover .polaroid-image {
+            filter: sepia(0%) contrast(120%);
+        }
+
+        .polaroid-caption {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 1rem;
+            color: var(--fg-light);
+            text-align: center;
+            margin-top: 1rem;
+            position: absolute;
+            bottom: 0.8rem;
+            left: 1rem;
+            right: 1rem;
+        }
+
+        /* Regret Section */
+        .regret-section {
+            position: relative;
+            z-index: 10;
+            padding: 6rem 1.5rem;
+            background: linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
+        }
+
+        .regret-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .regret-card {
+            background: var(--card);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            padding: 2rem;
+            max-width: 280px;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .regret-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: var(--accent-deep);
+        }
+
+        .regret-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 1rem;
+            color: var(--accent-deep);
+        }
+
+        .regret-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--fg);
+        }
+
+        .regret-card p {
+            font-size: 0.95rem;
+            color: var(--fg-light);
+            line-height: 1.7;
+        }
+
+        /* Teaching Section */
+        .teachings-section {
+            position: relative;
+            z-index: 10;
+            padding: 6rem 1.5rem;
+            background: var(--bg);
+        }
+
+        .teaching-list {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .teaching-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--glass);
+            border-left: 3px solid var(--accent);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .teaching-item:hover {
+            background: rgba(128, 0, 0, 0.05);
+            transform: translateX(10px);
+        }
+
+        .teaching-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 300;
+            color: var(--accent-deep);
+            line-height: 1;
+        }
+
+        .teaching-text {
+            font-size: 1rem;
+            color: var(--fg-light);
+            line-height: 1.8;
+        }
+
+        /* Silent Wish Section */
+        .wish-section {
+            position: relative;
+            z-index: 10;
+            padding: 8rem 1.5rem;
+            background: radial-gradient(ellipse at center, rgba(128, 0, 0, 0.05) 0%, var(--bg) 60%);
+            text-align: center;
+        }
+
+        .wish-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .wish-content blockquote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 300;
+            font-style: italic;
+            color: var(--fg);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        /* Final Button */
+        .final-section {
+            position: relative;
+            z-index: 10;
+            padding: 6rem 1.5rem;
+            background: var(--bg-soft);
+            text-align: center;
+        }
+
+        .forgive-btn {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: transparent;
+            border: 2px solid var(--accent-deep);
+            color: var(--accent-deep);
+            font-family: 'Lora', serif;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .forgive-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-deep);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+
+        .forgive-btn:hover {
+            color: #fff;
+        }
+
+        .forgive-btn:hover::before {
+            left: 0;
+        }
+
+        .forgive-btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(169, 50, 38, 0.3);
+        }
+
+        .hidden-message {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+            pointer-events: none;
+        }
+
+        .hidden-message.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .hidden-message p {
+            font-family: 'Lora', serif;
+            font-size: 1.3rem;
+            font-style: italic;
+            color: var(--fg);
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 10;
+            padding: 3rem 1.5rem;
+            background: var(--bg);
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        footer p {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            color: var(--fg-light);
+            font-size: 1.1rem;
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .petal, .particle, .shape { display: none; }
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 640px) {
+            .letter-container { padding: 2rem 1.5rem; }
+            .polaroid-grid { grid-template-columns: 1fr; max-width: 300px; }
+            .regret-cards { flex-direction: column; align-items: center; }
+            .teaching-item { flex-direction: column; gap: 0.5rem; }
+            .hero-bg-name { -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1); }
+        }
+        
+    </style>
+</head>
+<body>
+   
+    <!-- 3D Shapes Background -->
+    <div class="shapes-container" id="shapes-container"></div>
+
+    <!-- Floating Particles Container -->
+    <div id="particles-container"></div>
+
+    <!-- Rose Petals Container -->
+    <div id="petals-container"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <!-- Full Background Name -->
+        <div class="hero-bg-name">Musfira Ayesha</div>
+        
+        <h1 class="hero-title">I'm Sorry Sfira...</h1>
+        <p class="hero-subtitle">Because I hurt your feelings</p>
+        <div class="scroll-indicator">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 5v14M19 12l-7 7-7-7"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Main Letter Section -->
+    <section class="letter-section">
+        <div class="letter-container reveal-section" id="letter-card">
+            <div class="letter-greeting">Musfira Ayesha,</div>
+            <div class="letter-content">
+                <p>Assalamualaikum… I hope you are doing well. I don't know how you are feeling these days, but I truly pray that you are safe, happy, and at peace.</p>
+                
+                <p>I know I may have told many lies. I know I made mistakes. I accept that I was wrong. I'm not perfect, and I take full responsibility for what happened. But honestly… I was not such a terrible person that I deserved to be completely erased from your life in a single moment. Still, if that's how you felt, then maybe I really hurt you more than I understood at that time.</p>
+                
+                <p>If you have decided to hate me and keep no connection with me, I respect your decision. I cannot force you to stay. Love and care can never be forced. I only want you to be happy, even if that happiness does not include me.</p>
+                
+                <p>What I did at the end was wrong. It was something I never intended to do. I lost control of my emotions, and that mistake will stay with me as a lifelong regret. The thought that I hurt you honestly breaks me inside.</p>
+                
+                <p>I know forgetting everything is not easy. Maybe you can't forget… and truthfully, I can't either. Some people become a part of your heart in a way that time cannot erase. You are one of those people for me.</p>
+                
+                <p>You were the one who taught me how to smile again. You helped me reconnect with people. You made me feel understood in ways I had never felt before. Because of you, I grew. Because of you, I became better.</p>
+                
+                <p>I don't know what the future holds, but I sincerely wish that one day we could meet again without anger, without pain — just with peace. Even if it's just once.</p>
+                
+                <p>If possible… please forgive me.</p>
+                
+                <p>No matter what happens, I will always pray for your happiness and success.</p>
+                
+                <div class="signature">Forever grateful for you...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Polaroid Gallery Section -->
+    <section class="gallery-section">
+        <h2 class="section-title reveal-section">Moments in Memory</h2>
+        <p class="section-subtitle reveal-section">Fragments of a time I'll always cherish</p>
+        
+        <div class="polaroid-grid" id="gallery">
+            <!-- Polaroids will be dynamically generated -->
+        </div>
+    </section>
+
+    <!-- What I Regret Section -->
+    <section class="regret-section">
+        <h2 class="section-title reveal-section">What I Regret</h2>
+        <p class="section-subtitle reveal-section">Honest acceptance of my mistakes</p>
+        
+        <div class="regret-cards">
+            <div class="regret-card reveal-section">
+                <svg class="regret-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                    <path d="M12 8v4M12 16h.01"/>
+                </svg>
+                <h3>The Lies</h3>
+                <p>Every word that wasn't true. I should have been honest from the start, no matter how hard it was.</p>
+            </div>
+            
+            <div class="regret-card reveal-section">
+                <svg class="regret-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    <line x1="4" y1="4" x2="20" y2="20"/>
+                </svg>
+                <h3>The Hurt</h3>
+                <p>Pain I caused you. If I could take it all back, I would. But I can only accept and apologize.</p>
+            </div>
+            
+            <div class="regret-card reveal-section">
+                <svg class="regret-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                </svg>
+                <h3>The End</h3>
+                <p>Losing control that final time. That moment will remain my deepest regret forever.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- What You Taught Me Section -->
+    <section class="teachings-section">
+        <h2 class="section-title reveal-section">What You Taught Me</h2>
+        <p class="section-subtitle reveal-section">Gifts you gave me that I'll keep forever</p>
+        
+        <div class="teaching-list">
+            <div class="teaching-item reveal-section">
+                <span class="teaching-number">01</span>
+                <p class="teaching-text">You taught me how to smile again when I had forgotten what happiness felt like.</p>
+            </div>
+            
+            <div class="teaching-item reveal-section">
+                <span class="teaching-number">02</span>
+                <p class="teaching-text">You helped me reconnect with people, to open up instead of hiding away.</p>
+            </div>
+            
+            <div class="teaching-item reveal-section">
+                <span class="teaching-number">03</span>
+                <p class="teaching-text">You made me feel understood in ways I had never experienced before.</p>
+            </div>
+            
+            <div class="teaching-item reveal-section">
+                <span class="teaching-number">04</span>
+                <p class="teaching-text">Because of you, I grew. Because of you, I became better.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- A Silent Wish Section -->
+    <section class="wish-section">
+        <div class="wish-content reveal-section">
+            <h2 class="section-title">A Silent Wish</h2>
+            <blockquote>
+                "I don't know what the future holds, but I sincerely wish that one day we could meet again — without anger, without pain... just with peace."
+            </blockquote>
+            <p style="color: var(--fg-light); font-style: italic;">Even if it's just once.</p>
+        </div>
+    </section>
+
+    <!-- Final Section with Button -->
+    <section class="final-section">
+        <h2 class="section-title reveal-section">One Last Thing</h2>
+        <p class="section-subtitle reveal-section">If you ever find it in your heart</p>
+        
+        <button class="forgive-btn reveal-section" id="forgiveBtn" aria-label="Click if you forgive">
+            If You Ever Forgive Me
+        </button>
+        
+        <div class="hidden-message" id="hiddenMessage">
+            <p>"No matter what happens, I will always pray for your happiness and success."</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>With sincere regret and endless prayers for your happiness.</p>
+    </footer>
+
+    <script>
+        // Polaroid Gallery Data
+        const polaroidData = [
+            { caption: "A smile wrapped in sunlight and warmth", img: "a1.jpg" },
+            { caption: "Grace in every gentle glance", img: "a3.jpg" },
+            { caption: "Soft as a spring morning breeze", img: "a7.jpg" },
+            { caption: "Beauty in quiet peaceful moments", img: "a8.jpg" },
+            { caption: "Where elegance meets pure innocence", img: "a2.jpg" },
+            { caption: "Blooming with grace and charm", img: "a9.jpg" },
+            { caption: "A vision in pastel dreamy skies", img: "a11.jpg" },
+            { caption: "Sunlight loves her soft glow", img: "a12.jpg" },
+            { caption: "Timeless and tender at heart", img: "a14.jpg" },
+            { caption: "Wrapped in calm sweet serenity", img: "a15.jpg" },
+            { caption: "A beautiful story in her eyes", img: "a16.jpg" },
+            { caption: "Poetry in simple pure simplicity", img: "a17.jpg" },
+            { caption: "Lost in golden glowing light", img: "a19.jpg" },
+            { caption: "Pure, soft, and truly unforgettable", img: "a20.jpg" },
+            { caption: "Like a gentle golden sunrise", img: "a4.jpg" },
+            { caption: "Calm, kind, and truly captivating", img: "a21.jpg" },
+            { caption: "Beauty beyond simple words", img: "a22.jpg" },
+            { caption: "Whispers of soft graceful elegance", img: "a5.jpg" },
+            { caption: "Radiating warmth and happiness", img: "a23.jpg" },
+            { caption: "A heart full of light", img: "a24.jpg" },
+            { caption: "Shining with quiet confidence", img: "a10.jpg" },
+            { caption: "Graceful soul with golden aura", img: "a25.jpg" },
+            { caption: "Delicate charm in every smile", img: "a6.jpg" },
+            { caption: "Serenity painted in soft hues", img: "a18.jpg" },
+            { caption: "Elegance flowing like morning light", img: "a13.jpg" },
+        ];
+        
+
+        // Generate Polaroid Gallery
+        function generateGallery() {
+            const gallery = document.getElementById('gallery');
+            polaroidData.forEach((item, index) => {
+                const polaroid = document.createElement('div');
+                polaroid.className = 'polaroid reveal-section';
+                polaroid.style.transitionDelay = `${index * 0.1}s`;
+                polaroid.innerHTML = `
+                    <img src="${item.img}" alt="Memory ${index + 1}" class="polaroid-image" loading="lazy">
+                    <p class="polaroid-caption">${item.caption}</p>
+                `;
+                gallery.appendChild(polaroid);
+            });
+        }
+
+        // Create Rose Petal SVG
+        function createPetalSVG() {
+            // Maroon/Rose colors
+            const colors = ['#c0392b', '#922b21', '#e74c3c', '#f5e6e8'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const scale = 0.4 + Math.random() * 0.4;
+            
+            return `<svg width="30" height="30" viewBox="0 0 30 30" style="transform: scale(${scale});">
+                <ellipse cx="15" cy="15" rx="12" ry="8" fill="${color}" opacity="0.8"/>
+            </svg>`;
+        }
+
+        // Falling Rose Petals
+        function createPetal() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            petal.innerHTML = createPetalSVG();
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.animationDuration = (8 + Math.random() * 8) + 's';
+            petal.style.animationDelay = Math.random() * 2 + 's';
+            
+            document.getElementById('petals-container').appendChild(petal);
+            
+            setTimeout(() => {
+                if (petal.parentNode) petal.remove();
+            }, 18000);
+        }
+
+        // Create Floating Particles
+        function createParticles() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            
+            const container = document.getElementById('particles-container');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.top = Math.random() * 100 + 'vh';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Create 3D Geometric Shapes
+        function create3DShapes() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            
+            const container = document.getElementById('shapes-container');
+            const shapes = ['ring', 'sphere', 'cube'];
+            
+            for (let i = 0; i < 10; i++) {
+                const shape = document.createElement('div');
+                const type = shapes[Math.floor(Math.random() * shapes.length)];
+                shape.className = `shape ${type}`;
+                
+                // Random position
+                shape.style.left = Math.random() * 100 + 'vw';
+                shape.style.top = Math.random() * 100 + 'vh';
+                
+                // Random size
+                const size = Math.random() * 100 + 50;
+                shape.style.width = size + 'px';
+                shape.style.height = size + 'px';
+                
+                // Random animation duration
+                shape.style.animationDuration = (15 + Math.random() * 20) + 's';
+                shape.style.animationDelay = Math.random() * 5 + 's';
+                
+                container.appendChild(shape);
+            }
+        }
+
+        // Scroll Reveal Animation
+        function setupScrollReveal() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+            document.querySelectorAll('.reveal-section').forEach(el => observer.observe(el));
+        }
+
+        // Forgive Button Interaction
+        function setupForgiveButton() {
+            const btn = document.getElementById('forgiveBtn');
+            const message = document.getElementById('hiddenMessage');
+            
+            btn.addEventListener('click', () => {
+                message.classList.toggle('visible');
+                btn.textContent = message.classList.contains('visible') ? 'Thank You...' : 'If You Ever Forgive Me';
+            });
+        }
+
+        // 3D Letter Card Interaction
+        function setup3DCard() {
+            const card = document.getElementById('letter-card');
+            if (!card) return;
+
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        }
+
+        // Initialize Everything
+        function init() {
+            generateGallery();
+            createParticles();
+            create3DShapes();
+            setupScrollReveal();
+            setupForgiveButton();
+            setup3DCard();
+            
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                setInterval(createPetal, 600);
+                for (let i = 0; i < 5; i++) setTimeout(createPetal, i * 200);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
